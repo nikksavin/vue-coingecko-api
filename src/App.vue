@@ -3,7 +3,8 @@
 
     <v-app>
       <v-main>
-          <MoviesList :list="moviesList"/>
+          <PosterBg :poster="posterBg" />
+          <MoviesList :list="moviesList" @changePoster="onChangePoster"/>
       </v-main>
     </v-app>
 
@@ -13,17 +14,26 @@
 <script>
 import {mapActions, mapGetters} from 'vuex';
 import MoviesList from "@/components/MoviesList";
+import PosterBg from "@/components/PosterBg";
 
 export default {
   name: 'App',
+    data: () => ({
+        posterBg: "",
+    }),
+
   components: {
     MoviesList,
+      PosterBg,
   },
   computed: {
     ...mapGetters('movies', ["moviesList"])
   } ,
   methods: {
-    ...mapActions("movies", ["fetchMovies"])
+    ...mapActions("movies", ["fetchMovies"]),
+      onChangePoster(poster) {
+        this.posterBg = poster;
+      }
   }
 }
 </script>
@@ -33,6 +43,9 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
+  position: relative;
+}
+v-main {
+  position: relative;
 }
 </style>

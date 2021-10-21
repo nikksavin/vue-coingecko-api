@@ -1,14 +1,15 @@
 <template>
   <v-container>
-    <h3 class="v-list-item__title">IMDBs Top 250</h3>
+
     <v-row>
+    <h3 class="v-list-item__title">IMDBs Top 250</h3>
       <template v-if="isExist">
         <v-col
             cols="3"
             v-for="(movie, key) in list"
             :key="key"
         >
-            <MovieListItem :movie="movie" />
+            <MovieListItem :movie="movie"  @mouseover.Native="onMouseOver(movie.Poster)" />
         </v-col>
       </template>
         <template v-else>
@@ -37,6 +38,11 @@ import MovieListItem from "./MovieListItem";
         return Boolean(Object.keys(this.list).length);
       }
     },
+    methods: {
+        onMouseOver (poster) {
+            this.$emit("changePoster", poster);
+        }
+    }
   }
 </script>
 
@@ -44,5 +50,8 @@ import MovieListItem from "./MovieListItem";
   .v-list-item__title {
     font-size: 50px;
     margin-bottom: 30px;
+      z-index: 1;
+      color: #fff;
+      margin-top: 30px;
   }
 </style>
